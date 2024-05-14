@@ -1,36 +1,10 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-
-const TURNS = {
-  X: 'X',
-  O: 'O',
-};
-
-const Square = ({children, isSelected, updateBoard, index}) => {
-  const className = `square ${isSelected ? 'is-selected' : ''}`
-  const handleClick = () => {
-    updateBoard(index);
-  }
-  return(
-    <div onClick={handleClick}
-    className={className}>
-        {children}
-      </div>
-    );
-  }
-  
-const WINNER_COMBOS = [
-  [0,1,2],
-  [3,4,5],
-  [6,7,8],
-  [0,3,6],
-  [1,4,7],
-  [2,5,8],
-  [0,4,8],
-  [2,4,6]
-]
+import confetti from 'canvas-confetti'
+import './App.css';
+import { Square } from './Components/Square';
+import { TURNS } from './constantes';
+import { checkWinnerFrom } from './logic/board'
+import { WinnerModal } from './Components/WinnerModal';
 
   function App() {
   // const board = Array(9).fill(null);
@@ -38,18 +12,14 @@ const WINNER_COMBOS = [
   const [Turn, setTurn] = useState(TURNS.X);
   const [Winner, setWinner] = useState(null);
 
-  const checkWinner = (boardChek) => {
-    for(const combo of WINNER_COMBOS){
-      const [a,b,c] = combo
-      if (
-        boardChek[a] &&
-        boardChek[a] === boardChek[b] &&
-        boardChek[b] === boardChek[c]
-      ){
-        return boardChek[a]
-      }
-    }
-    return null
+  const resetGame = () => {
+    setBoard(Array(9).fill(null));
+    setTurn(TURNS.X);
+    setWinner(null);
+  }
+
+  const checkEndWinner = (newBoard) => {
+    return newBoard.every((Square) => Square !== null);
   }
 
   const updateBoard = (index) => {
@@ -58,14 +28,17 @@ const WINNER_COMBOS = [
     //actualiza el tablero 
     const newBoard = [...Board];
     newBoard[index] = Turn;
-    setBoard(newBoard);
+    setBoard(newBoard);//es asincrono
     //cambia de turno
     const newTurn = Turn === TURNS.X ? TURNS.O : TURNS.X;
     setTurn(newTurn);
     //checar si hay un ganador
-    const newWinner = checkWinner(newBoard);
+    const newWinner = checkWinnerFrom(newBoard);//se manda el newBoard por parametro para vitar errores de que aun tenga el estado anterior
     if(newWinner){
+      confetti();
       setWinner(newWinner);
+    } else if (checkEndWinner(newBoard)){
+      setWinner(false);
     }
   }
 
@@ -73,15 +46,16 @@ const WINNER_COMBOS = [
     <>
     <main className='board'>
       <h1>Tic Tac Toe</h1>
+      <button onClick={resetGame} >Reiniciar Juego</button>
       <section className='game'>
         {
-          Board.map((_, index) => {
+          Board.map((square, index) => {
             return (
               <Square 
               key={index}
               index={index}
               updateBoard={updateBoard}//se manda la funcion no la ejecucion de la funcion para que se ejecute dentro del Square para vitar que se ejecute cada que se renderice
-              >{Board[index]}</Square>
+              >{square}</Square>
             )
           })
         }
@@ -95,6 +69,8 @@ const WINNER_COMBOS = [
           {TURNS.O}
         </Square>
       </section>
+
+      <WinnerModal Winner={Winner} resetGame={resetGame}/>
     </main>
     </>
   )

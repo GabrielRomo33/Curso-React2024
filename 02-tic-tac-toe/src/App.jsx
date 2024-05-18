@@ -4,6 +4,7 @@ import './App.css';
 import { Square, WinnerModal, Tablero } from './Components';
 import { TURNS } from './constantes';
 import { checkWinnerFrom, checkEndWinner } from './logic/board'
+import { SaveGameStorage, resetGameStorage } from './logic/Storage/index'
 // import { WinnerModal } from './Components/WinnerModal';
 // import { Tablero } from './Components';
 
@@ -22,8 +23,7 @@ import { checkWinnerFrom, checkEndWinner } from './logic/board'
     setBoard(Array(9).fill(null));
     setTurn(TURNS.X);
     setWinner(null);
-    window.localStorage.removeItem('Board');
-    window.localStorage.removeItem('Trun');
+    resetGameStorage();
   }
 
   const updateBoard = (index) => {
@@ -35,9 +35,11 @@ import { checkWinnerFrom, checkEndWinner } from './logic/board'
     //cambia de turno
     const newTurn = Turn === TURNS.X ? TURNS.O : TURNS.X;
     setTurn(newTurn);
-    //Guardar Partida
-    window.localStorage.setItem('Board', JSON.stringify(newBoard));
-    window.localStorage.setItem('Turn', newTurn);
+    //Guarda la partida
+    SaveGameStorage({
+      Board: newBoard,
+      Turn: newTurn
+    });
     //checar si hay un ganador
     const newWinner = checkWinnerFrom(newBoard);//se manda el newBoard por parametro para vitar errores de que aun tenga el estado anterior
     if(newWinner){

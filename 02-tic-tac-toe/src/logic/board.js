@@ -13,3 +13,7 @@ export const checkWinnerFrom = (boardChek) => {
     }
     return null
   }
+
+  export const checkEndWinner = (newBoard) => {
+    return newBoard.every((Square) => Square !== null);
+  }

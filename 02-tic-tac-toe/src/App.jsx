@@ -1,10 +1,11 @@
 import { useState } from 'react'
 import confetti from 'canvas-confetti'
 import './App.css';
-import { Square } from './Components/Square';
+import { Square, WinnerModal, Tablero } from './Components';
 import { TURNS } from './constantes';
 import { checkWinnerFrom, checkEndWinner } from './logic/board'
-import { WinnerModal } from './Components/WinnerModal';
+// import { WinnerModal } from './Components/WinnerModal';
+// import { Tablero } from './Components';
 
   function App() {
   const [Board, setBoard] = useState( () => {
@@ -52,19 +53,8 @@ import { WinnerModal } from './Components/WinnerModal';
     <main className='board'>
       <h1>Tic Tac Toe</h1>
       <button onClick={resetGame} >Reiniciar Juego</button>
-      <section className='game'>
-        {
-          Board.map((square, index) => {
-            return (
-              <Square 
-              key={index}
-              index={index}
-              updateBoard={updateBoard}//se manda la funcion no la ejecucion de la funcion para que se ejecute dentro del Square para vitar que se ejecute cada que se renderice
-              >{square}</Square>
-            )
-          })
-        }
-      </section>
+      
+      <Tablero Board={Board} updateBoard={updateBoard}/>
 
       <section className='turn'>
         <Square isSelected={Turn === TURNS.X}>

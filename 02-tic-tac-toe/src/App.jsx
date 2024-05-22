@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import confetti from 'canvas-confetti'
 import './App.css';
 import { Square, WinnerModal, Tablero } from './Components';
@@ -46,6 +46,11 @@ import { BoardState, TurnState } from './logic/Estados/States';
       setWinner(false);
     }
   }
+
+  useEffect(() => {
+   console.log('this is the end');
+  },[Winner])
+  
 
   return (
     <>

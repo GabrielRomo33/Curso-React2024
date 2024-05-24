@@ -2,11 +2,13 @@ import {WINNER_COMBOS} from '../constantes'
 
 export const checkWinnerFrom = (boardChek) => {
     for(const combo of WINNER_COMBOS){
-      const [a,b,c] = combo
+      const [a,b,c,d] = combo
       if (
         boardChek[a] &&
         boardChek[a] === boardChek[b] &&
-        boardChek[b] === boardChek[c]
+        boardChek[b] === boardChek[c] 
+        &&
+        boardChek[c] === boardChek[d]
       ){
         return boardChek[a]
       }

@@ -13,7 +13,7 @@ import { BoardState, TurnState } from './logic/Estados/States';
   const [Winner, setWinner] = useState(null);
 
   const resetGame = () => {
-    setBoard(Array(9).fill(null));
+    setBoard(Array(42).fill(null));
     setTurn(TURNS.X);
     setWinner(null);
     resetGameStorage();
@@ -55,7 +55,7 @@ import { BoardState, TurnState } from './logic/Estados/States';
   return (
     <>
     <main className='board'>
-      <h1>Tic Tac Toe</h1>
+      <h1>Conecta 4</h1>
       <button onClick={resetGame} >Reiniciar Juego</button>
       
       <Tablero Board={Board} updateBoard={updateBoard}/>

@@ -1,7 +1,7 @@
 
 export const BoardState = () => {
     const boardFromStorage = window.localStorage.getItem('Board');
-    return boardFromStorage ? JSON.parse(boardFromStorage) : Array(9).fill(null);
+    return boardFromStorage ? JSON.parse(boardFromStorage) : Array(42).fill(null);
 }
 
 export const TurnState = () => {

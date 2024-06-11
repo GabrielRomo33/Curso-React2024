@@ -21,13 +21,10 @@ function useCatImage  ({fact}){
         if(!fact) return
         const threefirstWord = fact.split(' ', 3).join();
             // const firstWord = fact.split(' ').slice(0, 3).join(' ');
-            //console.log(threefirstWord);
             fetch(`https://cataas.com/cat/says/${threefirstWord}?fontSize=50&fontColor=red`)
             .then(res => res)
             .then(response => {
-                console.log(response);
                 const { url } = response
-                console.log(url);
                 setImageUrl(url);
             })
     }, [fact]);

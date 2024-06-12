@@ -7,23 +7,10 @@
 
 //     getRandomFact();
 // }, []);
-import { useEffect, useState } from "react"
 import './app.css'
-import { getRandomFact } from "./srvices/Facts";
+import { useCatFact } from './Hooks/useCatFact';
 import { useCatImage } from "./Hooks/useCatImages";
-
-//const CAT_ENDPOINT_IMAGE_URL = `https://cataas.com/cat/says/${firstWord}`;//constante con la ruta de la api
 //const CAT_PREFIX_IMAGE_URL = 'https://cataas.com';
-const useCatFact = () => {
-    const [fact, setFact] = useState();
-
-    const refreshFact = () => {
-        getRandomFact().then(newFact => setFact(newFact));
-    }
-    useEffect( getRandomFact,[]);
-
-    return { fact, refreshFact };
-}
 
 export function App () {
 
@@ -37,7 +24,6 @@ export function App () {
         refreshFact();
     }
     
-
     return (
         <main>
             <h1>Hard Skool</h1>

@@ -10,44 +10,31 @@
 import { useEffect, useState } from "react"
 import './app.css'
 import { getRandomFact } from "./srvices/Facts";
+import { useCatImage } from "./Hooks/useCatImages";
 
 //const CAT_ENDPOINT_IMAGE_URL = `https://cataas.com/cat/says/${firstWord}`;//constante con la ruta de la api
-const CAT_PREFIX_IMAGE_URL = 'https://cataas.com';
+//const CAT_PREFIX_IMAGE_URL = 'https://cataas.com';
+const useCatFact = () => {
+    const [fact, setFact] = useState();
 
-function useCatImage  ({fact}){
-    const [imageUrl, setImageUrl] = useState();
-    useEffect(() => {
+    const refreshFact = () => {
+        getRandomFact().then(newFact => setFact(newFact));
+    }
+    useEffect( getRandomFact,[]);
 
-        if(!fact) return
-        const threefirstWord = fact.split(' ', 3).join();
-            // const firstWord = fact.split(' ').slice(0, 3).join(' ');
-            fetch(`https://cataas.com/cat/says/${threefirstWord}?fontSize=50&fontColor=red`)
-            .then(res => res)
-            .then(response => {
-                const { url } = response
-                setImageUrl(url);
-            })
-    }, [fact]);
-    return { imageUrl }
+    return { fact, refreshFact };
 }
 
 export function App () {
 
-    const [fact, setFact] = useState();//state que de encargara de actualizar las consultas de la api 
+    const { fact, refreshFact } = useCatFact();
     const { imageUrl } = useCatImage({ fact });
-    
 
-    useEffect(() => {
-        // getRandomFact().then(setFact); //forma simplificada
-        getRandomFact().then(newFact => setFact(newFact));
-     },[])
-
-
-  
-        
+     
     const handleClick = async () => {
-        const newFact = await getRandomFact(setFact);
-        setFact(newFact);
+        // const newFact = await getRandomFact(setFact);
+        // setFact(newFact);
+        refreshFact();
     }
     
 

@@ -4,7 +4,6 @@
 //         const json = await res.json();
 //         setFact(json.fact);
 //     }
-
 //     getRandomFact();
 // }, []);
 import './app.css'

@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
 import './App.css'
-
 import { Movies } from './Components/Movies';
 import { useMovies } from './Hooks/useMovies';
 
@@ -30,14 +29,14 @@ function useSearch(){
     setError(null) ;
   }, [search])
   return {search,updateSearch,error};
-}
+} 
 
 function App() {
   const { search, updateSearch ,error } = useSearch();
   const { movies, getMovies } = useMovies({ search });
 
 const handleSubmit = (event) => {
-  event.preventDefault();
+  event.preventDefault(); 
   getMovies();
   // const fields = new window.FormData(event.target);
   // const query = fields.get('query');

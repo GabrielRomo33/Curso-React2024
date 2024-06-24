@@ -10,5 +10,7 @@ export function useMovies ({search}){
        setMovies(newMovies);
     }
 
-    return { movies: mappedMovies, getMovies }
+
+
+    return { movies, getMovies }
 }

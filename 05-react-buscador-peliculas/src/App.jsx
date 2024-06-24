@@ -7,7 +7,7 @@ function useSearch(){
   const [search, updateSearch] = useState('');
   const [error, setError] = useState(null);
   const isFirstInput = useRef(true);
-  
+
   useEffect(() => {
     if(isFirstInput.current){
       isFirstInput.current = search === '';
@@ -34,7 +34,7 @@ function useSearch(){
 
 function App() {
   const { search, updateSearch ,error } = useSearch();
-  const { movies, getMovies } = useMovies({ search });
+  const { movies,Loading, getMovies } = useMovies({ search });
 
 const handleSubmit = (event) => {
   event.preventDefault(); 
@@ -68,7 +68,7 @@ const handleChange = (event) => {
 
       <main>
         {
-          <Movies movies={movies}/>
+          Loading ? <p>Cargando... </p> : <Movies movies={movies}/>
         }
       </main> 
     </div>

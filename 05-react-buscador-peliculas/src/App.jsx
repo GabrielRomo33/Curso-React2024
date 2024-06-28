@@ -50,8 +50,6 @@ const handleChange = (event) => {
   updateSearch(event.target.value);
 }
 
-
-
   return (
     <div className='page'>
       <h1>Buscador de Peliculas</h1>

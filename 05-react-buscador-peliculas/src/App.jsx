@@ -7,13 +7,13 @@ function useSearch(){
   const [search, updateSearch] = useState('');
   const [error, setError] = useState(null);
   const isFirstInput = useRef(true);
-
+  
   useEffect(() => {
     if(isFirstInput.current){
       isFirstInput.current = search === '';
       return
     }
-
+    
     if(search === ''){
       setError('No se puede retornal resultados de la busqueda sin un texto');
       return
@@ -26,28 +26,32 @@ function useSearch(){
       setError('No se puede retornal resultados de la busqueda si el texto es menor de 3 caracteres');
       return
     }
-  
+    
     setError(null) ;
   }, [search])
   return {search,updateSearch,error};
 } 
 
 function App() {
+  const [sort, setSort] = useState(false);
   const { search, updateSearch ,error } = useSearch();
-  const { movies,Loading, getMovies } = useMovies({ search });
-
-const handleSubmit = (event) => {
-  event.preventDefault(); 
-  getMovies();
-  // const fields = new window.FormData(event.target);
-  // const query = fields.get('query');
-  // const query = Object.fromEntries(new window.FormData(event.target));
-}
-
-const handleChange = (event) => { 
-  const newQuery = event.target.value;
-  if(newQuery.startsWith(' ')) return;
-  updateSearch(event.target.value);
+  const { movies,Loading, getMovies } = useMovies({ search, sort });
+  
+  const handleSubmit = (event) => {
+    event.preventDefault(); 
+    getMovies();
+    // const fields = new window.FormData(event.target);
+    // const query = fields.get('query');
+    // const query = Object.fromEntries(new window.FormData(event.target));
+  }
+  
+  const handleSort = () => {
+    setSort(!sort);
+  }
+  const handleChange = (event) => { 
+    const newQuery = event.target.value;
+    if(newQuery.startsWith(' ')) return;
+    updateSearch(event.target.value);
 }
 
   return (
@@ -59,6 +63,7 @@ const handleChange = (event) => {
             border: '1px solid transparent',
             borderBlockColor: error ? 'red' : 'transparent'
           }} onChange={handleChange} value={search} type="text" name='query' id="" placeholder='Avengers, Lords of Rings, The Matrix' />
+          <input type="checkbox" onChange={handleSort} checked={sort} />
           <button type='submit'>Buscar</button>
         </form>
         {error && <p style={{color: 'red'}}>{error}</p>}

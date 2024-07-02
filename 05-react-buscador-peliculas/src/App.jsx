@@ -1,20 +1,21 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import './App.css'
 import { Movies } from './Components/Movies';
 import { useMovies } from './Hooks/useMovies';
+import debounce from 'just-debounce-it';
 
 function useSearch(){
   const [search, updateSearch] = useState('');
   const [error, setError] = useState(null);
   const isFirstInput = useRef(true);
-  
+
   useEffect(() => {
     if(isFirstInput.current){
       isFirstInput.current = search === '';
       return
     }
     
-    if(search === ''){
+    if(search === ''){ 
       setError('No se puede retornal resultados de la busqueda sin un texto');
       return
     }
@@ -36,10 +37,18 @@ function App() {
   const [sort, setSort] = useState(false);
   const { search, updateSearch ,error } = useSearch();
   const { movies,Loading, getMovies } = useMovies({ search, sort });
+
+  const debounceGetMovies = useCallback (
+    debounce(search => {
+    console.log('search', search);
+    getMovies({ search });
+    },300)
+    ,[getMovies]
+  );
   
   const handleSubmit = (event) => {
     event.preventDefault(); 
-    getMovies();
+    getMovies({search});
     // const fields = new window.FormData(event.target);
     // const query = fields.get('query');
     // const query = Object.fromEntries(new window.FormData(event.target));
@@ -52,6 +61,7 @@ function App() {
     const newQuery = event.target.value;
     if(newQuery.startsWith(' ')) return;
     updateSearch(event.target.value);
+    debounceGetMovies(newQuery);
 }
 
   return (

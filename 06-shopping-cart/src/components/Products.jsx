@@ -5,9 +5,9 @@ export function Products ({ products }) {
     return (
         <main className='products'>
             <ul>
-                {products.map(products => (
+                {products.slice(0,10).map(products => (
                 <li key={products.id}>
-                    <img src={products.thumbnail} alt={products.title} />
+                    <img src={products.image} alt={products.title} />
                     <div>
                         <strong>{products.title}</strong> - ${products.price}
                     </div>

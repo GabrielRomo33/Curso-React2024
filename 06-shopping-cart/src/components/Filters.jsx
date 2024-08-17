@@ -1,27 +1,47 @@
-import React from 'react'
+import React, { useId, useState } from 'react'
 import './Filters.css'
 
-export function Filters()  {
+export function Filters({onChangeFilters})  {
+
+  const [minPrice, setMinPrice] = useState(0);
+  const minPriceFilterId = useId();
+  const categoryFilterId = useId();
+
+  const handleChangeMinPrice = (event) => {
+    setMinPrice(event.target.value);
+    onChangeFilters(prevState => ({
+      ...prevState,
+      minPrice: event.target.value,
+    }));
+  }
+
+  const handleChangeCategory = (event) => {
+    onChangeFilters(prevState => ({
+      ...prevState,
+      category: event.target.value,
+    }));
+  }
   return (
     <section className='filters'>
         <div>
-            <label htmlFor="price">minimum price: </label>
+            <label htmlFor={minPriceFilterId}>minimum price: </label>
             <input 
             type="range" 
             name="prices" 
-            id="price"
+            id={minPriceFilterId}
             min={0}
-            max={1000} />
-            <span>{}</span>
+            max={1000} 
+            onChange={handleChangeMinPrice}/>
+            <span>{minPrice}</span>
         </div>
         <div>
-            <label htmlFor="category">category: </label>
-            <select id="category">
+            <label htmlFor={categoryFilterId} >category: </label>
+            <select id={categoryFilterId} onChange={handleChangeCategory} >
                 <option value="All">All</option>
-                <option value="">women's clothing</option>
-                <option value="">men's clothing</option>
-                <option value="">jewelery</option>
-                <option value="">electronics</option>
+                <option value="women's clothing">women's clothing</option>
+                <option value="men's clothing">men's clothing</option>
+                <option value="jewelery">jewelery</option>
+                <option value="electronics">electronics</option>
             </select>
         </div>
     </section>

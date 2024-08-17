@@ -8,7 +8,7 @@ function App() {
 
   const [products] = useState(initialProducts);
   const [filters, setFilters] = useState({
-    category: 'all',
+    category: 'All',
     minPrice: 0,
   })
 
@@ -19,7 +19,7 @@ function App() {
     return products.filter(products => {
       return (
         products.price >= filters.minPrice && (
-          filters.category === 'all' || products.category === filters.category
+          filters.category === 'All' || products.category === filters.category
         )
       )
     })
@@ -28,7 +28,7 @@ function App() {
   return (
     <>
       <h1>Shopping Cart 🛒</h1>
-      <Headre/>
+      <Headre changeFilters={setFilters}/>
       <Products products={filteredProducts}/>
     </>
   )

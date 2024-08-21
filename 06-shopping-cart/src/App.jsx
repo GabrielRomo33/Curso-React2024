@@ -1,39 +1,24 @@
 import { products as initialProducts } from './mocks/products.json'
 import './App.css'
 import { Products } from './components/Products'
-import { useState } from 'react'
 import { Headre } from './components/Headre';
 import { Footer } from './components/Footer';
 import { IS_DEVELOPMENT } from './config';
+import { useFilters } from './hooks/useFilters';
+import { useState } from 'react';
+// products.forEach(product => {
+//   console.log(product.category);
+// });
 
-function useFilters() {
-  const [filters, setFilters] = useState({
-    category: 'All',
-    minPrice: 0,
-  })
-  const filterProducts = (products) => {
-    // products.forEach(product => {
-    //   console.log(product.category);
-    // });
-    return products.filter(products => {
-      return (
-        products.price >= filters.minPrice && (
-          filters.category === 'All' || products.category === filters.category
-        )
-      )
-    })
-  }
-  return { filters, filterProducts, setFilters}
-}
 
 function App() {
   const [products] = useState(initialProducts);
-  const {filters, filterProducts, setFilters} = useFilters();
+  const {filters, filterProducts} = useFilters();
   const filteredProducts = filterProducts(products);
   return (
     <>
       <h1>Shopping Cart 🛒</h1>
-      <Headre changeFilters={setFilters}/>
+      <Headre />
       <Products products={filteredProducts}/>
       {IS_DEVELOPMENT && <Footer filters={filters}/>}
     </>

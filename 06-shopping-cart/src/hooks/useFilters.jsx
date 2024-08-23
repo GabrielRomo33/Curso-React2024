@@ -13,5 +13,5 @@ export function useFilters() {
         )
       })
     }
-    return { filters, filterProducts, setFilters}
+    return { filters, filterProducts, setFilters }
   }

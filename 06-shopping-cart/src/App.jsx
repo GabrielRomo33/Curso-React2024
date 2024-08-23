@@ -6,6 +6,7 @@ import { Footer } from './components/Footer';
 import { IS_DEVELOPMENT } from './config';
 import { useFilters } from './hooks/useFilters';
 import { useState } from 'react';
+import { Cart } from './components/Cart';
 // products.forEach(product => {
 //   console.log(product.category);
 // });
@@ -19,8 +20,9 @@ function App() {
     <>
       <h1>Shopping Cart 🛒</h1>
       <Headre />
+      <Cart />
       <Products products={filteredProducts}/>
-      {IS_DEVELOPMENT && <Footer filters={filters}/>}
+      {IS_DEVELOPMENT && <Footer />}
     </>
   )
 }

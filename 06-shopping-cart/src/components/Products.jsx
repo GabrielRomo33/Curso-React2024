@@ -1,26 +1,40 @@
 import { useCart } from '../hooks/useCart';
-import './Products.css'
-import { AddToCartIcon } from './icons';
+import './Products.css';
+import { AddToCartIcon, RemoveFromCartIcon,  } from './icons';
 
 export function Products ({ products }) {
-    const {addToCart, cart} = useCart();
+    const {addToCart, cart, removeFormCart} = useCart();
+    const checkProductInCart = product => {
+        return cart.some(item => item.id === product.id);
+    }
     return (
         <main className='products'>
             <ul>
-                {products.slice(0,20).map(products => (
-                <li key={products.id}>
-                    <img src={products.image} alt={products.title} />
-                    <div>
-                        <strong>{products.title}</strong> - ${products.price}
-                    </div>
-                    <div>
-                        <br />
-                        <button>
-                            <AddToCartIcon />
-                        </button>
-                    </div>
-                </li>
-                ))}
+                {products.slice(0,20).map(product => {
+                const isProductInCart = checkProductInCart(product);
+                return (
+                    <li key={product.id}>
+                        <img src={product.image} alt={product.title} />
+                        <div>
+                            <strong>{product.title}</strong> - ${product.price}
+                        </div>
+                        <div>
+                            <br />
+                            <button style={{background: isProductInCart ? 'red' : '#09f'}} onClick={() => {
+                                isProductInCart
+                                ? removeFormCart(product)
+                                : addToCart(product)
+                                }}>
+                                {
+                                    isProductInCart
+                                    ? <RemoveFromCartIcon />
+                                    : <AddToCartIcon />
+                                }
+                            </button>
+                        </div>
+                    </li>
+                    )}
+                )}
             </ul>
         </main>
     )

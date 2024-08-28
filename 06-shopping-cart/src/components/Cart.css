@@ -1,12 +1,13 @@
 .cart{
     background: #000;
     display: none;
-    padding: 32px;
+    padding: 9px;
     position: fixed;
     right: 0px;
     top: 0px;
     width: 200px;
     overflow-y: scroll;
+    margin: 9px;
 }
 
 .cart img{
@@ -39,7 +40,7 @@
     height: 32px;
     justify-content: center;
     padding: 4px;
-    position: absolute;
+    position: fixed;
     right: 8px;
     top: 8px;
     transition: all .4s ease;

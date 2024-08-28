@@ -23,7 +23,7 @@ export function Products ({ products }) {
                             <button style={{background: isProductInCart ? 'red' : '#09f'}} onClick={() => {
                                 isProductInCart
                                 ? removeFormCart(product)
-                                : addToCart(product)
+                                : addToCart(product) 
                                 }}>
                                 {
                                     isProductInCart

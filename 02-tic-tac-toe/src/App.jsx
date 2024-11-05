@@ -20,7 +20,7 @@ import { BoardState, TurnState } from './logic/Estados/States';
   }
 
   const updateBoard = (index) => {
-    if (Board[index] || Winner) return;//evia que se sobre escriba al hacer click en un cuadro que ya tenga un valor o si ya hay un ganador 
+    if (Board[index] || Winner) return;//evita que se sobre escriba al hacer click en un cuadro que ya tenga un valor o si ya hay un ganador 
     
     //actualiza el tablero 
     const newBoard = [...Board];

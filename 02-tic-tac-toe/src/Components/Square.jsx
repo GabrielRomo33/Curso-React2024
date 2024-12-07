@@ -1,7 +1,11 @@
+const Habilitados = [];
 export const Square = ({children, isSelected, updateBoard, index}) => {
     const className = `square ${isSelected ? 'is-selected' : ''}`
     const handleClick = () => {
-      updateBoard(index);
+      if(index>=35 || Habilitados.includes(index)){
+        Habilitados.push(index - 7)
+        updateBoard(index);
+      }
     }
     
     return(

@@ -8,3 +8,11 @@ export const resetGameStorage = () => {
     window.localStorage.removeItem('Board');
     window.localStorage.removeItem('Trun');
 }
+
+// export const saveHabilitados = ({Habilitados}) => {
+//     window.localStorage.setItem('Habilitados', Habilitados);
+// }
+
+// export const resetHabilitados = () => {
+//     window.localStorage.removeItem('Habilitados');
+// }

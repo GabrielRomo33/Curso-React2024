@@ -1,22 +1,25 @@
 import { useEffect, useState } from 'react'
 import confetti from 'canvas-confetti'
 import './App.css';
-import { Square, WinnerModal, Tablero } from './Components';
+import { Square, WinnerModal, Tablero, ResetHabilitados } from './Components';
 import { TURNS } from './constantes';
 import { checkWinnerFrom, checkEndWinner } from './logic/board'
 import { SaveGameStorage, resetGameStorage } from './logic/Storage/index'
 import { BoardState, TurnState } from './logic/Estados/States';
 
+
   function App() {
   const [Board, setBoard] = useState(BoardState);
   const [Turn, setTurn] = useState(TurnState);
   const [Winner, setWinner] = useState(null);
+  // const Habilitados = [];
 
   const resetGame = () => {
     setBoard(Array(42).fill(null));
     setTurn(TURNS.X);
     setWinner(null);
     resetGameStorage();
+    ResetHabilitados();
   }
 
   const updateBoard = (index) => {
@@ -36,6 +39,9 @@ import { BoardState, TurnState } from './logic/Estados/States';
       Board: newBoard,
       Turn: newTurn
     });
+    // saveHabilitados({
+    //   Habilitados: []
+    // });
 
     //checar si hay un ganador
     const newWinner = checkWinnerFrom(newBoard);//se manda el newBoard por parametro para vitar errores de que aun tenga el estado anterior
